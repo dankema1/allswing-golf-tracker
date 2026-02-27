@@ -1,9 +1,9 @@
 /**
- * History screen logic
+ * History screen logic - reads from localStorage
  */
 
-import { sessionsAPI } from './api.js';
 import { displayHistory, displaySessionDetail, showModal, hideModal } from './ui.js';
+import { PracticeSession } from './practice.js';
 
 let currentFilter = 'all';
 
@@ -16,11 +16,22 @@ export async function initHistoryScreen() {
 }
 
 /**
- * Load history with optional filter
+ * Load history with optional filter from localStorage
  */
 async function loadHistory(clubMode = 'all') {
   try {
-    const sessions = await sessionsAPI.getHistory(50, clubMode === 'all' ? null : clubMode);
+    // Get sessions from localStorage
+    const practiceSession = new PracticeSession();
+    let sessions = practiceSession.getHistory();
+
+    // Filter by club mode if not 'all'
+    if (clubMode !== 'all') {
+      sessions = sessions.filter(s => s.club_mode === clubMode);
+    }
+
+    // Limit to 50 most recent
+    sessions = sessions.slice(0, 50);
+
     displayHistory(sessions);
   } catch (error) {
     console.error('Failed to load history:', error);
@@ -87,7 +98,15 @@ function setupHistoryListeners() {
  */
 async function showSessionDetail(sessionId) {
   try {
-    const session = await sessionsAPI.getById(sessionId);
+    // Get session from localStorage
+    const practiceSession = new PracticeSession();
+    const sessions = practiceSession.getHistory();
+    const session = sessions.find(s => s.id === sessionId);
+
+    if (!session) {
+      throw new Error('Session not found');
+    }
+
     displaySessionDetail(session);
     showModal('session-detail-modal');
   } catch (error) {
