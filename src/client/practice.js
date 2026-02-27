@@ -1,8 +1,7 @@
 /**
  * PracticeSession class - manages active practice session state
+ * All data stored in browser localStorage (no backend API calls)
  */
-
-import { sessionsAPI, shotsAPI } from './api.js';
 
 export class PracticeSession {
   constructor() {
@@ -11,6 +10,7 @@ export class PracticeSession {
     this.ironType = null;
     this.shots = [];
     this.lastShotId = null;
+    this.startedAt = null;
   }
 
   /**
@@ -18,18 +18,23 @@ export class PracticeSession {
    */
   async startSession(clubMode, ironType = null) {
     try {
-      const session = await sessionsAPI.create(clubMode, ironType);
-
-      this.sessionId = session.id;
+      // Generate a unique session ID based on timestamp
+      this.sessionId = `session_${Date.now()}`;
       this.clubMode = clubMode;
       this.ironType = ironType;
       this.shots = [];
       this.lastShotId = null;
+      this.startedAt = new Date().toISOString();
 
       // Save to localStorage for session resume
       this.saveToLocalStorage();
 
-      return session;
+      return {
+        id: this.sessionId,
+        club_mode: clubMode,
+        iron_type: ironType,
+        started_at: this.startedAt
+      };
     } catch (error) {
       console.error('Failed to start session:', error);
       throw error;
@@ -41,20 +46,21 @@ export class PracticeSession {
    */
   async recordShot(shotType, shotCategory) {
     try {
-      const result = await shotsAPI.record(this.sessionId, shotType, shotCategory);
+      // Generate shot ID
+      const shotId = `shot_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       // Add to local shots array
       this.shots.push({
-        id: result.id,
+        id: shotId,
         shot_type: shotType,
         shot_category: shotCategory,
         timestamp: new Date().toISOString()
       });
 
-      this.lastShotId = result.id;
+      this.lastShotId = shotId;
       this.saveToLocalStorage();
 
-      return result;
+      return { id: shotId };
     } catch (error) {
       console.error('Failed to record shot:', error);
       throw error;
@@ -70,8 +76,6 @@ export class PracticeSession {
     }
 
     try {
-      const result = await shotsAPI.delete(this.lastShotId);
-
       // Remove from local shots array
       this.shots = this.shots.filter(s => s.id !== this.lastShotId);
 
@@ -84,7 +88,7 @@ export class PracticeSession {
 
       this.saveToLocalStorage();
 
-      return result;
+      return { success: true };
     } catch (error) {
       console.error('Failed to undo shot:', error);
       throw error;
@@ -92,16 +96,33 @@ export class PracticeSession {
   }
 
   /**
-   * End the current session
+   * End the current session and save to history
    */
   async endSession(notes = null) {
     try {
-      const result = await sessionsAPI.end(this.sessionId, notes);
+      const endedAt = new Date().toISOString();
+      const stats = this.calculateLiveStats();
 
-      // Clear localStorage
+      // Create completed session object
+      const completedSession = {
+        id: this.sessionId,
+        club_mode: this.clubMode,
+        iron_type: this.ironType,
+        started_at: this.startedAt,
+        ended_at: endedAt,
+        total_shots: this.shots.length,
+        notes: notes,
+        shots: this.shots,
+        stats: stats
+      };
+
+      // Save to session history
+      this.saveToHistory(completedSession);
+
+      // Clear active session
       this.clearLocalStorage();
 
-      return result;
+      return { success: true, session: completedSession };
     } catch (error) {
       console.error('Failed to end session:', error);
       throw error;
@@ -191,7 +212,7 @@ export class PracticeSession {
   }
 
   /**
-   * Save session state to localStorage
+   * Save session state to localStorage (active session)
    */
   saveToLocalStorage() {
     const state = {
@@ -199,7 +220,8 @@ export class PracticeSession {
       clubMode: this.clubMode,
       ironType: this.ironType,
       shots: this.shots,
-      lastShotId: this.lastShotId
+      lastShotId: this.lastShotId,
+      startedAt: this.startedAt
     };
     localStorage.setItem('activeSession', JSON.stringify(state));
   }
@@ -216,16 +238,51 @@ export class PracticeSession {
       this.ironType = state.ironType;
       this.shots = state.shots || [];
       this.lastShotId = state.lastShotId;
+      this.startedAt = state.startedAt;
       return true;
     }
     return false;
   }
 
   /**
-   * Clear localStorage
+   * Clear active session from localStorage
    */
   clearLocalStorage() {
     localStorage.removeItem('activeSession');
+  }
+
+  /**
+   * Save completed session to history
+   */
+  saveToHistory(session) {
+    // Get existing history
+    const history = this.getHistory();
+
+    // Add new session to beginning (most recent first)
+    history.unshift(session);
+
+    // Save back to localStorage
+    localStorage.setItem('sessionHistory', JSON.stringify(history));
+  }
+
+  /**
+   * Get all sessions from history
+   */
+  getHistory() {
+    const stored = localStorage.getItem('sessionHistory');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return [];
+  }
+
+  /**
+   * Delete a session from history
+   */
+  deleteFromHistory(sessionId) {
+    const history = this.getHistory();
+    const filtered = history.filter(s => s.id !== sessionId);
+    localStorage.setItem('sessionHistory', JSON.stringify(filtered));
   }
 
   /**
