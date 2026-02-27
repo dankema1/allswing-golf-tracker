@@ -49,7 +49,7 @@ if (IS_PRODUCTION) {
   const distPath = join(projectRoot, 'dist');
   app.use(express.static(distPath));
 
-  app.get('/*', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(join(distPath, 'index.html'));
   });
 }
@@ -73,4 +73,5 @@ process.on('SIGINT', () => {
   db.close();
   process.exit(0);
 });
+
 
