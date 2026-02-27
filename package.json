@@ -1,0 +1,29 @@
+{
+  "name": "allswing-golf-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Mobile-first golf practice tracker",
+  "main": "src/server/server.js",
+  "scripts": {
+    "dev:server": "nodemon src/server/server.js",
+    "dev:client": "vite",
+    "start:all": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "vite build",
+    "start": "NODE_ENV=production node src/server/server.js",
+    "db:init": "node src/database/init.js"
+  },
+  "keywords": ["golf", "practice", "tracker"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "vite": "^7.3.1"
+  }
+}

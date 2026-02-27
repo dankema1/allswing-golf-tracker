@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Track your golf practice sessions and improve your game">
+  <meta name="theme-color" content="#22c55e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AllSwing">
+  <link rel="manifest" href="/manifest.json">
+  <title>AllSwing - Golf Practice Tracker</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/practice.css">
+</head>
+<body>
+  <!-- Home Screen (Category Selection) -->
+  <div id="home-screen" class="screen active">
+    <header class="app-header">
+      <h1>🏌️ AllSwing</h1>
+      <p>Track your practice, improve your game</p>
+    </header>
+
+    <div class="category-selection">
+      <button class="category-btn contact-btn" data-category="contact">
+        <span class="category-icon">🏌️</span>
+        <span class="category-name">CONTACT</span>
+        <span class="category-desc">Solid strikes</span>
+      </button>
+
+      <button class="category-btn accuracy-btn" data-category="accuracy">
+        <span class="category-icon">🎯</span>
+        <span class="category-name">ACCURACY</span>
+        <span class="category-desc">Ball flight control</span>
+      </button>
+
+      <button class="category-btn putting-btn" data-category="putting">
+        <span class="category-icon">⛳</span>
+        <span class="category-name">PUTTING</span>
+        <span class="category-desc">Speed & make %</span>
+      </button>
+    </div>
+
+    <button class="secondary-btn history-nav-btn">
+      View History
+    </button>
+  </div>
+
+  <!-- Contact Category Screen -->
+  <div id="contact-screen" class="screen">
+    <header class="category-header">
+      <button class="back-btn" data-back="home-screen">← Back</button>
+      <h2>Contact Practice</h2>
+    </header>
+
+    <div class="club-selection">
+      <button class="club-btn driver-btn" data-club="driver" data-practice-mode="contact">
+        <span class="club-icon">🏌️</span>
+        <span class="club-name">Driver</span>
+        <span class="club-desc">Solid contact</span>
+      </button>
+
+      <button class="club-btn iron-btn" data-club="iron" data-practice-mode="contact">
+        <span class="club-icon">🎯</span>
+        <span class="club-name">Iron</span>
+        <span class="club-desc">Strike quality</span>
+      </button>
+
+      <button class="club-btn wedge-btn" data-club="wedge" data-practice-mode="contact">
+        <span class="club-icon">📍</span>
+        <span class="club-name">Wedge</span>
+        <span class="club-desc">Pure strikes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Accuracy Category Screen -->
+  <div id="accuracy-screen" class="screen">
+    <header class="category-header">
+      <button class="back-btn" data-back="home-screen">← Back</button>
+      <h2>Accuracy Practice</h2>
+    </header>
+
+    <div class="club-selection">
+      <button class="club-btn driver-btn" data-club="driver" data-practice-mode="accuracy">
+        <span class="club-icon">🏌️</span>
+        <span class="club-name">Driver</span>
+        <span class="club-desc">Target precision</span>
+      </button>
+
+      <button class="club-btn iron-btn" data-club="iron" data-practice-mode="accuracy">
+        <span class="club-icon">🎯</span>
+        <span class="club-name">Iron</span>
+        <span class="club-desc">Distance control</span>
+      </button>
+
+      <button class="club-btn wedge-btn" data-club="wedge" data-practice-mode="accuracy">
+        <span class="club-icon">📍</span>
+        <span class="club-name">Wedge</span>
+        <span class="club-desc">Pin-point accuracy</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Putting Category Screen -->
+  <div id="putting-screen" class="screen">
+    <header class="category-header">
+      <button class="back-btn" data-back="home-screen">← Back</button>
+      <h2>Putting Practice</h2>
+    </header>
+
+    <div class="club-selection">
+      <button class="club-btn putting-makemiss-btn" data-club="putter" data-mode="makemiss">
+        <span class="club-icon">✓</span>
+        <span class="club-name">Make/Miss</span>
+        <span class="club-desc">Track holed putts</span>
+      </button>
+
+      <button class="club-btn putting-speed-btn" data-club="putter" data-mode="speed">
+        <span class="club-icon">⚡</span>
+        <span class="club-name">Speed Control</span>
+        <span class="club-desc">Lag putting practice</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Iron Type Selection Modal -->
+  <div id="iron-modal" class="modal">
+    <div class="modal-content">
+      <h2>Select Iron Type</h2>
+      <div class="iron-type-grid">
+        <button class="iron-type-btn" data-iron="5i">5i</button>
+        <button class="iron-type-btn" data-iron="6i">6i</button>
+        <button class="iron-type-btn" data-iron="7i">7i</button>
+        <button class="iron-type-btn" data-iron="8i">8i</button>
+        <button class="iron-type-btn" data-iron="9i">9i</button>
+        <button class="iron-type-btn" data-iron="PW">PW</button>
+      </div>
+      <button class="modal-cancel">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Practice Screen -->
+  <div id="practice-screen" class="screen">
+    <header class="practice-header">
+      <div class="practice-info">
+        <h2 id="club-display">Driver</h2>
+        <p id="shot-counter">0 shots</p>
+      </div>
+      <button id="end-session-btn" class="end-btn">End Session</button>
+    </header>
+
+    <div class="practice-container">
+      <!-- Contact Mode: Ball Flight Section -->
+      <section id="contact-section" class="shot-section hidden">
+        <h3>Ball Flight</h3>
+        <div class="contact-grid">
+          <button class="shot-btn hook-btn" data-shot="hook" data-category="ball_flight">
+            <span class="shot-label">Hook</span>
+            <span class="shot-symbol">←←</span>
+          </button>
+          <button class="shot-btn leak-left-btn" data-shot="leak_left" data-category="ball_flight">
+            <span class="shot-label">Leak Left</span>
+            <span class="shot-symbol">←</span>
+          </button>
+          <button class="shot-btn pure-btn large-btn" data-shot="pure" data-category="ball_flight">
+            <span class="shot-label">PURE</span>
+            <span class="shot-symbol">★</span>
+          </button>
+          <button class="shot-btn slight-right-btn" data-shot="slight_right" data-category="ball_flight">
+            <span class="shot-label">Slight Right</span>
+            <span class="shot-symbol">→</span>
+          </button>
+          <button class="shot-btn slice-btn" data-shot="slice" data-category="ball_flight">
+            <span class="shot-label">Slice</span>
+            <span class="shot-symbol">→→</span>
+          </button>
+        </div>
+
+        <!-- Contact Mode Mishits -->
+        <div class="mishits-grid small-buttons">
+          <button class="shot-btn mishit-btn small-btn" data-shot="top" data-category="mishit">
+            <span class="shot-label">Top</span>
+          </button>
+          <button class="shot-btn mishit-btn small-btn" data-shot="chunk" data-category="mishit">
+            <span class="shot-label">Chunk</span>
+          </button>
+          <button class="shot-btn mishit-btn small-btn" data-shot="hosel" data-category="mishit">
+            <span class="shot-label">Hosel</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Accuracy Mode Section -->
+      <section id="accuracy-section" class="shot-section hidden">
+        <h3>Target Accuracy</h3>
+        <div class="accuracy-grid">
+          <button class="shot-btn on-target-btn large-btn" data-shot="on_target" data-category="accuracy">
+            <span class="shot-label">ON TARGET</span>
+            <span class="shot-symbol">🎯</span>
+          </button>
+          <div class="direction-buttons">
+            <button class="shot-btn left-btn" data-shot="left" data-category="accuracy">
+              <span class="shot-label">Left</span>
+              <span class="shot-symbol">←</span>
+            </button>
+            <button class="shot-btn right-btn" data-shot="right" data-category="accuracy">
+              <span class="shot-label">Right</span>
+              <span class="shot-symbol">→</span>
+            </button>
+            <button class="shot-btn short-btn" data-shot="short" data-category="accuracy">
+              <span class="shot-label">Short</span>
+              <span class="shot-symbol">⬇</span>
+            </button>
+            <button class="shot-btn long-btn" data-shot="long" data-category="accuracy">
+              <span class="shot-label">Long</span>
+              <span class="shot-symbol">⬆</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Accuracy Mode Mishits -->
+        <div class="mishits-grid small-buttons">
+          <button class="shot-btn mishit-btn small-btn" data-shot="top" data-category="mishit">
+            <span class="shot-label">Top</span>
+          </button>
+          <button class="shot-btn mishit-btn small-btn" data-shot="chunk" data-category="mishit">
+            <span class="shot-label">Chunk</span>
+          </button>
+          <button class="shot-btn mishit-btn small-btn" data-shot="hosel" data-category="mishit">
+            <span class="shot-label">Hosel</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Putter Make/Miss Section -->
+      <section id="putter-makemiss-section" class="shot-section hidden">
+        <h3>Result</h3>
+        <div class="putter-grid">
+          <button class="shot-btn make-btn" data-shot="make" data-category="putt">
+            <span class="shot-label">MAKE</span>
+            <span class="shot-symbol">✓</span>
+          </button>
+          <button class="shot-btn miss-btn" data-shot="miss" data-category="putt">
+            <span class="shot-label">MISS</span>
+            <span class="shot-symbol">✗</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Putter Speed Section -->
+      <section id="putter-speed-section" class="shot-section hidden">
+        <h3>Speed Control</h3>
+        <div class="putter-speed-grid">
+          <button class="shot-btn hammered-btn" data-shot="hammered" data-category="putt_speed">
+            <span class="shot-label">Hammered It</span>
+            <span class="shot-symbol">⬆️</span>
+          </button>
+          <button class="shot-btn speed-make-btn" data-shot="speed_make" data-category="putt_speed">
+            <span class="shot-label">MAKE</span>
+            <span class="shot-symbol">🎯</span>
+          </button>
+          <button class="shot-btn gimme-btn" data-shot="gimme" data-category="putt_speed">
+            <span class="shot-label">Gimme Range</span>
+            <span class="shot-symbol">✓</span>
+          </button>
+          <button class="shot-btn babied-btn" data-shot="babied" data-category="putt_speed">
+            <span class="shot-label">Babied It</span>
+            <span class="shot-symbol">⬇️</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Live Stats -->
+      <section class="stats-section">
+        <div class="stat-card">
+          <div class="stat-value" id="pure-percentage">0%</div>
+          <div class="stat-label" id="stat-label">Pure %</div>
+        </div>
+        <div class="recent-shots">
+          <div class="stat-label">Last 5 Shots</div>
+          <div id="recent-shots-list" class="recent-shots-list">
+            <span class="empty-state">No shots yet</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="practice-actions">
+        <button id="undo-btn" class="action-btn" disabled>Undo Last</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Screen -->
+  <div id="summary-screen" class="screen">
+    <header class="summary-header">
+      <h2>Session Complete!</h2>
+    </header>
+
+    <div class="summary-container">
+      <div class="summary-highlight">
+        <div class="total-shots">
+          <span id="summary-total">0</span>
+          <span>Total Shots</span>
+        </div>
+        <div class="pure-stat">
+          <span id="summary-pure-pct">0%</span>
+          <span>Pure</span>
+        </div>
+      </div>
+
+      <div id="summary-stats" class="summary-stats">
+        <!-- Dynamically populated -->
+      </div>
+
+      <div class="notes-section">
+        <label for="session-notes">Session Notes (optional)</label>
+        <textarea id="session-notes" placeholder="Any observations or notes about this session..."></textarea>
+      </div>
+
+      <div class="summary-actions">
+        <button id="save-session-btn" class="primary-btn">Save Session</button>
+        <button id="discard-session-btn" class="secondary-btn">Discard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Screen -->
+  <div id="history-screen" class="screen">
+    <header class="history-header">
+      <button id="back-home-btn" class="back-btn">← Back</button>
+      <h2>Practice History</h2>
+    </header>
+
+    <div class="history-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="driver">Driver</button>
+      <button class="filter-btn" data-filter="iron">Iron</button>
+      <button class="filter-btn" data-filter="wedge">Wedge</button>
+      <button class="filter-btn" data-filter="putter">Putter</button>
+    </div>
+
+    <div id="history-list" class="history-list">
+      <!-- Dynamically populated -->
+    </div>
+  </div>
+
+  <!-- Session Detail Modal -->
+  <div id="session-detail-modal" class="modal">
+    <div class="modal-content detail-modal">
+      <button class="modal-close">✕</button>
+      <div id="session-detail-content">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/client/main.js"></script>
+</body>
+</html>
