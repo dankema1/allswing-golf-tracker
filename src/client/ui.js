@@ -221,21 +221,19 @@ function generateSummaryStatsHTML(stats, clubMode, practiceMode = null, puttingM
     }
   }
 
-  // Mishits section (common to both modes)
-  const mishitsTotal = (stats.top_count || 0) + (stats.chunk_count || 0) + (stats.hosel_count || 0);
-  const mishitsHTML = mishitsTotal > 0 ? `
-    <div class="stat-group">
-      <h4>Mishits</h4>
-      ${createStatBar('Top', stats.top_count || 0, mishitsTotal, '#ef4444')}
-      ${createStatBar('Chunk', stats.chunk_count || 0, mishitsTotal, '#ef4444')}
-      ${createStatBar('Hosel', stats.hosel_count || 0, mishitsTotal, '#ef4444')}
-    </div>
-  ` : '';
-
   // Accuracy mode
   if (practiceMode === 'accuracy') {
     const accuracyTotal = (stats.on_target_count || 0) + (stats.left_count || 0) +
                           (stats.right_count || 0) + (stats.short_count || 0) + (stats.long_count || 0);
+
+    // Accuracy mode uses generic mishit count
+    const mishitCount = stats.mishit_count || 0;
+    const accuracyMishitsHTML = mishitCount > 0 ? `
+      <div class="stat-group">
+        <h4>Mishits</h4>
+        ${createStatBar('Mishit', mishitCount, mishitCount, '#ef4444')}
+      </div>
+    ` : '';
 
     return `
       <div class="stat-group">
@@ -246,9 +244,20 @@ function generateSummaryStatsHTML(stats, clubMode, practiceMode = null, puttingM
         ${createStatBar('Short', stats.short_count || 0, accuracyTotal, '#f97316')}
         ${createStatBar('Long', stats.long_count || 0, accuracyTotal, '#f97316')}
       </div>
-      ${mishitsHTML}
+      ${accuracyMishitsHTML}
     `;
   }
+
+  // Contact mode mishits section (three separate types)
+  const mishitsTotal = (stats.top_count || 0) + (stats.chunk_count || 0) + (stats.hosel_count || 0);
+  const mishitsHTML = mishitsTotal > 0 ? `
+    <div class="stat-group">
+      <h4>Mishits</h4>
+      ${createStatBar('Top', stats.top_count || 0, mishitsTotal, '#ef4444')}
+      ${createStatBar('Chunk', stats.chunk_count || 0, mishitsTotal, '#ef4444')}
+      ${createStatBar('Hosel', stats.hosel_count || 0, mishitsTotal, '#ef4444')}
+    </div>
+  ` : '';
 
   // Contact mode (default)
   const ballFlightTotal = (stats.hook_count || 0) + (stats.leak_left_count || 0) +
