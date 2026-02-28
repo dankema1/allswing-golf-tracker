@@ -239,6 +239,11 @@
   gap: 0.4rem;
 }
 
+/* Single Mishit Button (Accuracy Mode) */
+.mishits-single {
+  margin-top: 1rem;
+}
+
 .mishit-btn {
   border-color: var(--red);
   color: var(--red);
@@ -409,7 +414,8 @@
 
 .recent-shot-badge.top,
 .recent-shot-badge.chunk,
-.recent-shot-badge.hosel {
+.recent-shot-badge.hosel,
+.recent-shot-badge.mishit {
   background: #fee2e2;
   color: var(--red-dark);
 }
