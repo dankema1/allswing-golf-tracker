@@ -1,297 +1,618 @@
-/**
- * PracticeSession class - manages active practice session state
- * All data stored in browser localStorage (no backend API calls)
- */
+/* Practice Screen */
+.practice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
 
-export class PracticeSession {
-  constructor() {
-    this.sessionId = null;
-    this.clubMode = null;
-    this.ironType = null;
-    this.shots = [];
-    this.lastShotId = null;
-    this.startedAt = null;
+.practice-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.practice-info p {
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+.end-btn {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.end-btn:hover {
+  background: var(--red-dark);
+}
+
+.end-btn:active {
+  transform: scale(0.95);
+}
+
+/* Practice Container */
+.practice-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.shot-section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.shot-section h3 {
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Contact Mode Grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Accuracy Mode Grid */
+.accuracy-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.direction-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+/* Shot Buttons */
+.shot-btn {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 80px;
+  font-weight: 600;
+  position: relative;
+}
+
+.shot-btn:active {
+  transform: scale(0.95);
+}
+
+/* Large buttons (PURE, On-Target) */
+.large-btn {
+  min-height: 120px;
+  border-width: 4px;
+  font-size: 1.125rem;
+}
+
+.large-btn .shot-label {
+  font-size: 1rem;
+}
+
+.large-btn .shot-symbol {
+  font-size: 2.5rem;
+}
+
+/* Small buttons (Mishits) */
+.small-btn {
+  min-height: 45px;
+  padding: 0.375rem 0.5rem;
+  justify-content: center;
+}
+
+.small-btn .shot-label {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.shot-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.shot-symbol {
+  font-size: 1.5rem;
+}
+
+/* Shot Button Colors */
+.hook-btn {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.hook-btn:hover {
+  background: var(--red);
+  color: white;
+}
+
+.leak-left-btn {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.leak-left-btn:hover {
+  background: var(--orange);
+  color: white;
+}
+
+.pure-btn {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.pure-btn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.slight-right-btn {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.slight-right-btn:hover {
+  background: var(--blue);
+  color: white;
+}
+
+/* Accuracy Mode Buttons */
+.on-target-btn {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.on-target-btn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.left-btn,
+.right-btn {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.left-btn:hover,
+.right-btn:hover {
+  background: var(--blue);
+  color: white;
+}
+
+.short-btn,
+.long-btn {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.short-btn:hover,
+.long-btn:hover {
+  background: var(--orange);
+  color: white;
+}
+
+.slice-btn {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.slice-btn:hover {
+  background: var(--purple);
+  color: white;
+}
+
+/* Mishits Grid */
+.mishits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.mishits-grid.small-buttons {
+  gap: 0.4rem;
+}
+
+/* Single Mishit Button (Accuracy Mode) */
+.mishits-single {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.mishits-single .mishit-btn {
+  width: 100%;
+  min-height: 96px; /* 20% shorter than large-btn (120px * 0.8) */
+}
+
+.mishit-btn {
+  border-color: var(--red);
+  color: var(--red);
+  opacity: 0.8;
+}
+
+.mishit-btn:hover {
+  background: var(--red);
+  color: white;
+  opacity: 1;
+}
+
+/* Putter Grid */
+.putter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.make-btn {
+  border-color: var(--green);
+  color: var(--green);
+  border-width: 3px;
+  min-height: 100px;
+  font-size: 1.125rem;
+}
+
+.make-btn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.miss-btn {
+  border-color: var(--red);
+  color: var(--red);
+  min-height: 100px;
+  font-size: 1.125rem;
+}
+
+.miss-btn:hover {
+  background: var(--red);
+  color: white;
+}
+
+/* Putter Speed Grid */
+.putter-speed-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.putter-speed-grid .shot-btn {
+  min-height: 80px;
+  font-size: 1rem;
+}
+
+.hammered-btn {
+  border-color: var(--red);
+  color: var(--red);
+  border-width: 2px;
+}
+
+.hammered-btn:hover {
+  background: var(--red);
+  color: white;
+}
+
+.speed-make-btn {
+  border-color: var(--green);
+  color: var(--green);
+  border-width: 3px;
+  min-height: 100px;
+  font-size: 1.25rem;
+}
+
+.speed-make-btn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.gimme-btn {
+  border-color: var(--green);
+  color: var(--green);
+  border-width: 2px;
+}
+
+.gimme-btn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.babied-btn {
+  border-color: var(--orange);
+  color: var(--orange);
+  border-width: 2px;
+}
+
+.babied-btn:hover {
+  background: var(--orange);
+  color: white;
+}
+
+/* Stats Section */
+.stats-section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.stat-card {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--green);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.recent-shots {
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.recent-shots-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.recent-shot-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.recent-shot-badge.pure {
+  background: #dcfce7;
+  color: var(--green-dark);
+}
+
+.recent-shot-badge.draw,
+.recent-shot-badge.fade {
+  background: #dbeafe;
+  color: var(--blue-dark);
+}
+
+.recent-shot-badge.hook,
+.recent-shot-badge.slice {
+  background: #fef2f2;
+  color: var(--red-dark);
+}
+
+.recent-shot-badge.top,
+.recent-shot-badge.chunk,
+.recent-shot-badge.hosel,
+.recent-shot-badge.mishit {
+  background: #fee2e2;
+  color: var(--red-dark);
+}
+
+.recent-shot-badge.make {
+  background: #dcfce7;
+  color: var(--green-dark);
+}
+
+.recent-shot-badge.miss {
+  background: #fef2f2;
+  color: var(--red-dark);
+}
+
+.recent-shot-badge.hammered {
+  background: #fee2e2;
+  color: var(--red-dark);
+}
+
+.recent-shot-badge.speed_make {
+  background: #dcfce7;
+  color: var(--green-dark);
+}
+
+.recent-shot-badge.gimme {
+  background: #dcfce7;
+  color: var(--green-dark);
+}
+
+.recent-shot-badge.babied {
+  background: #ffedd5;
+  color: var(--orange-dark);
+}
+
+/* Practice Actions */
+.practice-actions {
+  margin-top: 1rem;
+}
+
+/* Summary Screen */
+.summary-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.summary-header h2 {
+  font-size: 2rem;
+  color: var(--green);
+}
+
+.summary-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.summary-highlight {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.total-shots,
+.pure-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-highlight span:first-child {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.summary-highlight span:last-child {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+.summary-stats {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.stat-group {
+  margin-bottom: 1.5rem;
+}
+
+.stat-group:last-child {
+  margin-bottom: 0;
+}
+
+.stat-group h4 {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.stat-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.stat-bar-label {
+  min-width: 60px;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.stat-bar-container {
+  flex: 1;
+  background: var(--gray-light);
+  border-radius: 4px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.stat-bar-value {
+  min-width: 40px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.notes-section {
+  margin-bottom: 1.5rem;
+}
+
+.notes-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.notes-section textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.notes-section textarea:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.summary-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .ball-flight-grid {
+    gap: 0.75rem;
   }
 
-  /**
-   * Start a new practice session
-   */
-  async startSession(clubMode, ironType = null) {
-    try {
-      // Generate a unique session ID based on timestamp
-      this.sessionId = `session_${Date.now()}`;
-      this.clubMode = clubMode;
-      this.ironType = ironType;
-      this.shots = [];
-      this.lastShotId = null;
-      this.startedAt = new Date().toISOString();
-
-      // Save to localStorage for session resume
-      this.saveToLocalStorage();
-
-      return {
-        id: this.sessionId,
-        club_mode: clubMode,
-        iron_type: ironType,
-        started_at: this.startedAt
-      };
-    } catch (error) {
-      console.error('Failed to start session:', error);
-      throw error;
-    }
+  .shot-btn {
+    min-height: 100px;
   }
 
-  /**
-   * Record a shot
-   */
-  async recordShot(shotType, shotCategory) {
-    try {
-      // Generate shot ID
-      const shotId = `shot_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-      // Add to local shots array
-      this.shots.push({
-        id: shotId,
-        shot_type: shotType,
-        shot_category: shotCategory,
-        timestamp: new Date().toISOString()
-      });
-
-      this.lastShotId = shotId;
-      this.saveToLocalStorage();
-
-      return { id: shotId };
-    } catch (error) {
-      console.error('Failed to record shot:', error);
-      throw error;
-    }
+  .mishits-grid {
+    gap: 0.75rem;
   }
 
-  /**
-   * Undo the last shot
-   */
-  async undoLastShot() {
-    if (!this.lastShotId) {
-      throw new Error('No shot to undo');
-    }
-
-    try {
-      // Remove from local shots array
-      this.shots = this.shots.filter(s => s.id !== this.lastShotId);
-
-      // Update lastShotId to the new last shot
-      if (this.shots.length > 0) {
-        this.lastShotId = this.shots[this.shots.length - 1].id;
-      } else {
-        this.lastShotId = null;
-      }
-
-      this.saveToLocalStorage();
-
-      return { success: true };
-    } catch (error) {
-      console.error('Failed to undo shot:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * End the current session and save to history
-   */
-  async endSession(notes = null) {
-    try {
-      const endedAt = new Date().toISOString();
-      const stats = this.calculateLiveStats();
-
-      // Create completed session object
-      const completedSession = {
-        id: this.sessionId,
-        club_mode: this.clubMode,
-        iron_type: this.ironType,
-        started_at: this.startedAt,
-        ended_at: endedAt,
-        total_shots: this.shots.length,
-        notes: notes,
-        shots: this.shots,
-        stats: stats
-      };
-
-      // Save to session history
-      this.saveToHistory(completedSession);
-
-      // Clear active session
-      this.clearLocalStorage();
-
-      return { success: true, session: completedSession };
-    } catch (error) {
-      console.error('Failed to end session:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Calculate live statistics
-   */
-  calculateLiveStats() {
-    const stats = {
-      pure_count: 0,
-      hook_count: 0,
-      leak_left_count: 0,
-      slight_right_count: 0,
-      slice_count: 0,
-      top_count: 0,
-      chunk_count: 0,
-      hosel_count: 0,
-      mishit_count: 0,
-      make_count: 0,
-      miss_count: 0,
-      hammered_count: 0,
-      speed_make_count: 0,
-      gimme_count: 0,
-      babied_count: 0,
-      on_target_count: 0,
-      left_count: 0,
-      right_count: 0,
-      short_count: 0,
-      long_count: 0,
-      pure_percentage: 0,
-      total_shots: this.shots.length,
-      recent_shots: []
-    };
-
-    this.shots.forEach(shot => {
-      const type = shot.shot_type.toLowerCase();
-      switch(type) {
-        case 'pure': stats.pure_count++; break;
-        case 'hook': stats.hook_count++; break;
-        case 'leak_left': stats.leak_left_count++; break;
-        case 'slight_right': stats.slight_right_count++; break;
-        case 'slice': stats.slice_count++; break;
-        case 'top': stats.top_count++; break;
-        case 'chunk': stats.chunk_count++; break;
-        case 'hosel': stats.hosel_count++; break;
-        case 'mishit': stats.mishit_count++; break;
-        case 'make': stats.make_count++; break;
-        case 'miss': stats.miss_count++; break;
-        case 'hammered': stats.hammered_count++; break;
-        case 'speed_make': stats.speed_make_count++; break;
-        case 'gimme': stats.gimme_count++; break;
-        case 'babied': stats.babied_count++; break;
-        case 'on_target': stats.on_target_count++; break;
-        case 'left': stats.left_count++; break;
-        case 'right': stats.right_count++; break;
-        case 'short': stats.short_count++; break;
-        case 'long': stats.long_count++; break;
-      }
-    });
-
-    if (this.shots.length > 0) {
-      // Calculate "good shots" based on context
-      // For putting make/miss: make
-      // For putting speed: speed_make + gimme
-      // For accuracy: on_target
-      // For contact: pure
-      const goodShots = stats.pure_count + stats.on_target_count + stats.speed_make_count + stats.gimme_count + stats.make_count;
-      stats.pure_percentage = Math.round((goodShots / this.shots.length) * 100 * 10) / 10;
-    }
-
-    // Get last 5 shots
-    stats.recent_shots = this.shots.slice(-5).reverse().map(s => ({
-      type: s.shot_type,
-      category: s.shot_category
-    }));
-
-    return stats;
-  }
-
-  /**
-   * Get club display name
-   */
-  getClubDisplay() {
-    if (this.clubMode === 'iron' && this.ironType) {
-      return `${this.ironType.toUpperCase()}`;
-    }
-    return this.clubMode.charAt(0).toUpperCase() + this.clubMode.slice(1);
-  }
-
-  /**
-   * Save session state to localStorage (active session)
-   */
-  saveToLocalStorage() {
-    const state = {
-      sessionId: this.sessionId,
-      clubMode: this.clubMode,
-      ironType: this.ironType,
-      shots: this.shots,
-      lastShotId: this.lastShotId,
-      startedAt: this.startedAt
-    };
-    localStorage.setItem('activeSession', JSON.stringify(state));
-  }
-
-  /**
-   * Load session state from localStorage
-   */
-  loadFromLocalStorage() {
-    const stored = localStorage.getItem('activeSession');
-    if (stored) {
-      const state = JSON.parse(stored);
-      this.sessionId = state.sessionId;
-      this.clubMode = state.clubMode;
-      this.ironType = state.ironType;
-      this.shots = state.shots || [];
-      this.lastShotId = state.lastShotId;
-      this.startedAt = state.startedAt;
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Clear active session from localStorage
-   */
-  clearLocalStorage() {
-    localStorage.removeItem('activeSession');
-  }
-
-  /**
-   * Save completed session to history
-   */
-  saveToHistory(session) {
-    // Get existing history
-    const history = this.getHistory();
-
-    // Add new session to beginning (most recent first)
-    history.unshift(session);
-
-    // Save back to localStorage
-    localStorage.setItem('sessionHistory', JSON.stringify(history));
-  }
-
-  /**
-   * Get all sessions from history
-   */
-  getHistory() {
-    const stored = localStorage.getItem('sessionHistory');
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    return [];
-  }
-
-  /**
-   * Delete a session from history
-   */
-  deleteFromHistory(sessionId) {
-    const history = this.getHistory();
-    const filtered = history.filter(s => s.id !== sessionId);
-    localStorage.setItem('sessionHistory', JSON.stringify(filtered));
-  }
-
-  /**
-   * Check if there's an active session
-   */
-  hasActiveSession() {
-    return this.sessionId !== null;
+  .putter-grid {
+    gap: 1.5rem;
   }
 }
