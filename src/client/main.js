@@ -15,6 +15,7 @@ import {
   displaySummary
 } from './ui.js';
 import { initHistoryScreen, refreshHistory } from './history.js';
+import { initInsights } from './insights.js';
 
 // Global state
 const practiceSession = new PracticeSession();
@@ -30,6 +31,7 @@ function init() {
   setupIronModalListeners();
   setupPracticeScreenListeners();
   setupSummaryScreenListeners();
+  initInsights();
 
   // Check for active session on load
   checkForActiveSession();
