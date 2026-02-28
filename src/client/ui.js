@@ -118,6 +118,18 @@ export function configurePracticeScreen(clubMode, puttingMode = null, practiceMo
     if (practiceMode === 'accuracy') {
       contactSection.classList.add('hidden');
       accuracySection.classList.remove('hidden');
+
+      // Change "ON TARGET" to "FAIRWAY HIT" for Driver only
+      const onTargetBtn = document.querySelector('.on-target-btn .shot-label');
+      if (onTargetBtn) {
+        if (clubMode === 'driver') {
+          onTargetBtn.textContent = 'FAIRWAY HIT';
+          statLabel.textContent = 'Fairway %';
+        } else {
+          onTargetBtn.textContent = 'ON TARGET';
+          statLabel.textContent = 'On-Target %';
+        }
+      }
     } else {
       // Default to contact mode
       contactSection.classList.remove('hidden');
