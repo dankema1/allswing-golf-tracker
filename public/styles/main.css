@@ -1,24 +1,24 @@
 /* CSS Variables */
 :root {
-  --green: #22c55e;
-  --green-dark: #16a34a;
-  --blue: #3b82f6;
-  --blue-dark: #2563eb;
-  --red: #ef4444;
-  --red-dark: #dc2626;
-  --orange: #f97316;
-  --orange-dark: #ea580c;
-  --yellow: #eab308;
-  --purple: #a855f7;
-  --gray: #6b7280;
-  --gray-light: #e5e7eb;
-  --bg: #f8fafc;
-  --card-bg: white;
-  --text: #1e293b;
-  --text-light: #64748b;
-  --border: #e2e8f0;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  /* New warm, modern color palette */
+  --primary: #3D6B47;        /* Muted fairway green */
+  --secondary: #C8A96E;      /* Warm sand/gold */
+  --bg: #F7F4EF;             /* Warm off-white/cream */
+  --card-bg: #FFFFFF;        /* Pure white for cards */
+  --text: #1C1C1A;           /* Primary text */
+  --text-light: #6B6B65;     /* Secondary text */
+  --border: #E8E4DC;         /* Borders and dividers */
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  /* Legacy colors for specific states */
+  --green: #3D6B47;
+  --green-dark: #2F5438;
+  --gold: #C8A96E;
+  --red: #C95D5D;
+  --orange: #D4976E;
+  --blue: #6B8FA3;
+  --surface: #F0EDE7;        /* Non-selected button bg */
 }
 
 /* Reset & Base Styles */
@@ -29,9 +29,10 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background: var(--bg);
   color: var(--text);
+  font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,7 +43,9 @@ body {
 .screen {
   display: none;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -58,18 +61,36 @@ body {
 /* Headers */
 .app-header {
   text-align: center;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  margin: -16px -16px 24px -16px;
+  position: relative;
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--green);
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.app-header h1::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
 }
 
 .app-header p {
   color: var(--text-light);
-  font-size: 1rem;
+  font-size: 14px;
 }
 
 /* Category Selection */
@@ -83,11 +104,11 @@ body {
 
 .category-btn {
   background: var(--card-bg);
-  border: 3px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: 16px;
-  padding: 2rem 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
@@ -96,6 +117,11 @@ body {
   align-items: center;
   gap: 0.5rem;
   min-height: 120px;
+  box-shadow: var(--shadow);
+}
+
+.category-btn:hover {
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
@@ -119,36 +145,30 @@ body {
 }
 
 .contact-btn {
-  border-color: var(--blue);
+  border-color: var(--primary);
 }
 
 .contact-btn:hover {
-  background: #eff6ff;
-  border-color: var(--blue-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 20px -5px rgba(59, 130, 246, 0.3);
+  background: rgba(61, 107, 71, 0.05);
+  border-color: var(--primary);
 }
 
 .accuracy-btn {
-  border-color: var(--green);
+  border-color: var(--primary);
 }
 
 .accuracy-btn:hover {
-  background: #f0fdf4;
-  border-color: var(--green-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 20px -5px rgba(34, 197, 94, 0.3);
+  background: rgba(61, 107, 71, 0.05);
+  border-color: var(--primary);
 }
 
 .putting-btn {
-  border-color: var(--purple);
+  border-color: var(--primary);
 }
 
 .putting-btn:hover {
-  background: #faf5ff;
-  border-color: #9333ea;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 20px -5px rgba(168, 85, 247, 0.3);
+  background: rgba(61, 107, 71, 0.05);
+  border-color: var(--primary);
 }
 
 /* Category Header */
@@ -186,9 +206,9 @@ body {
 .club-btn {
   background: var(--card-bg);
   border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem 1rem;
-  font-size: 1.25rem;
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--text);
   cursor: pointer;
@@ -201,6 +221,12 @@ body {
   box-shadow: var(--shadow);
 }
 
+.club-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
 .club-btn:active {
   transform: scale(0.98);
 }
@@ -209,34 +235,21 @@ body {
   font-size: 3rem;
 }
 
-.driver-btn:hover {
-  border-color: var(--blue);
-  background: #eff6ff;
-}
-
-.iron-btn:hover {
-  border-color: var(--green);
-  background: #f0fdf4;
-}
-
-.wedge-btn:hover {
-  border-color: var(--orange);
-  background: #fff7ed;
-}
-
+.driver-btn:hover,
+.iron-btn:hover,
+.wedge-btn:hover,
 .putter-btn:hover {
-  border-color: var(--purple);
-  background: #faf5ff;
+  background: rgba(61, 107, 71, 0.05);
 }
 
 /* Buttons */
 .primary-btn,
 .secondary-btn,
 .action-btn {
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  padding: 14px 28px;
+  font-size: 15px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 9999px;
   cursor: pointer;
   transition: all 0.2s;
   border: none;
@@ -247,12 +260,13 @@ body {
 }
 
 .primary-btn {
-  background: var(--green);
+  background: var(--primary);
   color: white;
 }
 
 .primary-btn:hover {
-  background: var(--green-dark);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(61, 107, 71, 0.3);
 }
 
 .primary-btn:active {
@@ -260,28 +274,31 @@ body {
 }
 
 .secondary-btn {
-  background: var(--card-bg);
+  background: transparent;
   color: var(--text);
   border: 2px solid var(--border);
 }
 
 .secondary-btn:hover {
-  background: var(--gray-light);
+  background: var(--surface);
+  transform: scale(1.02);
 }
 
 .action-btn {
-  background: var(--blue);
+  background: var(--primary);
   color: white;
 }
 
 .action-btn:hover {
-  background: var(--blue-dark);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(61, 107, 71, 0.3);
 }
 
 .action-btn:disabled {
-  background: var(--gray-light);
-  color: var(--gray);
+  background: var(--border);
+  color: var(--text-light);
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Modal */
@@ -382,17 +399,20 @@ body {
 }
 
 .back-btn {
-  background: var(--card-bg);
+  background: transparent;
   border: 2px solid var(--border);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
+  color: var(--text);
+  font-weight: 500;
 }
 
 .back-btn:hover {
-  background: var(--gray-light);
+  background: var(--surface);
+  transform: scale(1.02);
 }
 
 .history-filters {
@@ -404,25 +424,26 @@ body {
 }
 
 .filter-btn {
-  padding: 0.5rem 1rem;
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  font-size: 0.875rem;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s;
+  color: var(--text);
 }
 
 .filter-btn:hover {
-  background: var(--gray-light);
+  background: var(--border);
 }
 
 .filter-btn.active {
-  background: var(--green);
+  background: var(--primary);
   color: white;
-  border-color: var(--green);
+  border-color: var(--primary);
 }
 
 .history-list {
@@ -434,15 +455,15 @@ body {
 .history-item {
   background: var(--card-bg);
   border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 16px;
+  padding: 20px;
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: var(--shadow);
 }
 
 .history-item:hover {
-  border-color: var(--green);
+  border-color: var(--primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
