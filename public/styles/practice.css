@@ -4,40 +4,44 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  padding: 1rem;
+  padding: 20px;
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow);
 }
 
 .practice-info h2 {
-  font-size: 1.5rem;
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 0.25rem;
+  color: var(--text);
 }
 
 .practice-info p {
   color: var(--text-light);
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
 .end-btn {
   background: var(--red);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .end-btn:hover {
-  background: var(--red-dark);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(201, 93, 93, 0.3);
 }
 
 .end-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 /* Practice Container */
@@ -48,8 +52,8 @@
 
 .shot-section {
   background: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;
+  padding: 20px;
   margin-bottom: 1rem;
   box-shadow: var(--shadow);
 }
@@ -57,7 +61,8 @@
 .shot-section h3 {
   margin-bottom: 1rem;
   color: var(--text-light);
-  font-size: 0.875rem;
+  font-size: 14px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -86,19 +91,26 @@
 
 /* Shot Buttons */
 .shot-btn {
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 8px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 9999px;
   padding: 1rem 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.25rem;
   min-height: 80px;
   font-weight: 600;
   position: relative;
+  color: var(--text);
+}
+
+.shot-btn:hover {
+  transform: scale(1.02);
+  background: var(--border);
 }
 
 .shot-btn:active {
@@ -108,16 +120,18 @@
 /* Large buttons (PURE, On-Target) */
 .large-btn {
   min-height: 120px;
-  border-width: 4px;
-  font-size: 1.125rem;
+  border-width: 3px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .large-btn .shot-label {
-  font-size: 1rem;
+  font-size: 16px;
+  letter-spacing: 0.5px;
 }
 
 .large-btn .shot-symbol {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 /* Small buttons (Mishits) */
@@ -143,88 +157,98 @@
 
 /* Shot Button Colors */
 .hook-btn {
-  border-color: var(--red);
-  color: var(--red);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .hook-btn:hover {
   background: var(--red);
   color: white;
+  border-color: var(--red);
 }
 
 .leak-left-btn {
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .leak-left-btn:hover {
   background: var(--orange);
   color: white;
+  border-color: var(--orange);
 }
 
 .pure-btn {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--gold);
+  background: var(--gold);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.2);
 }
 
 .pure-btn:hover {
-  background: var(--green);
-  color: white;
+  background: var(--secondary);
+  transform: scale(1.05);
 }
 
 .slight-right-btn {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .slight-right-btn:hover {
   background: var(--blue);
   color: white;
+  border-color: var(--blue);
 }
 
 /* Accuracy Mode Buttons */
 .on-target-btn {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--gold);
+  background: var(--gold);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.2);
 }
 
 .on-target-btn:hover {
-  background: var(--green);
-  color: white;
+  background: var(--secondary);
+  transform: scale(1.05);
 }
 
 .left-btn,
 .right-btn {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .left-btn:hover,
 .right-btn:hover {
   background: var(--blue);
   color: white;
+  border-color: var(--blue);
 }
 
 .short-btn,
 .long-btn {
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .short-btn:hover,
 .long-btn:hover {
   background: var(--orange);
   color: white;
+  border-color: var(--orange);
 }
 
 .slice-btn {
-  border-color: var(--purple);
-  color: var(--purple);
+  border-color: transparent;
+  color: var(--text);
 }
 
 .slice-btn:hover {
-  background: var(--purple);
+  background: var(--red);
   color: white;
+  border-color: var(--red);
 }
 
 /* Mishits Grid */
@@ -270,28 +294,32 @@
 }
 
 .make-btn {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--gold);
+  background: var(--gold);
+  color: white;
   border-width: 3px;
   min-height: 100px;
-  font-size: 1.125rem;
+  font-size: 18px;
+  box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.2);
 }
 
 .make-btn:hover {
-  background: var(--green);
-  color: white;
+  background: var(--secondary);
+  transform: scale(1.05);
 }
 
 .miss-btn {
-  border-color: var(--red);
-  color: var(--red);
+  border-color: transparent;
+  background: var(--surface);
+  color: var(--text);
   min-height: 100px;
-  font-size: 1.125rem;
+  font-size: 18px;
 }
 
 .miss-btn:hover {
   background: var(--red);
   color: white;
+  border-color: var(--red);
 }
 
 /* Putter Speed Grid */
@@ -307,56 +335,62 @@
 }
 
 .hammered-btn {
-  border-color: var(--red);
-  color: var(--red);
+  border-color: transparent;
+  background: var(--surface);
+  color: var(--text);
   border-width: 2px;
 }
 
 .hammered-btn:hover {
   background: var(--red);
   color: white;
+  border-color: var(--red);
 }
 
 .speed-make-btn {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--gold);
+  background: var(--gold);
+  color: white;
   border-width: 3px;
   min-height: 100px;
-  font-size: 1.25rem;
+  font-size: 18px;
+  box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.2);
 }
 
 .speed-make-btn:hover {
-  background: var(--green);
-  color: white;
+  background: var(--secondary);
+  transform: scale(1.05);
 }
 
 .gimme-btn {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
   border-width: 2px;
 }
 
 .gimme-btn:hover {
-  background: var(--green);
-  color: white;
+  transform: scale(1.02);
 }
 
 .babied-btn {
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: transparent;
+  background: var(--surface);
+  color: var(--text);
   border-width: 2px;
 }
 
 .babied-btn:hover {
   background: var(--orange);
   color: white;
+  border-color: var(--orange);
 }
 
 /* Stats Section */
 .stats-section {
   background: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;
+  padding: 20px;
   margin-bottom: 1rem;
   box-shadow: var(--shadow);
 }
@@ -367,18 +401,19 @@
 }
 
 .stat-value {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--green);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary);
   line-height: 1;
+  margin-bottom: 8px;
 }
 
 .stat-label {
   color: var(--text-light);
-  font-size: 0.875rem;
+  font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.75rem;
+  letter-spacing: 1px;
 }
 
 .recent-shots {
@@ -468,8 +503,10 @@
 }
 
 .summary-header h2 {
-  font-size: 2rem;
-  color: var(--green);
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
 }
 
 .summary-container {
@@ -478,9 +515,9 @@
 }
 
 .summary-highlight {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--primary);
+  border-radius: 16px;
+  padding: 24px;
   color: white;
   display: flex;
   justify-content: space-around;
@@ -496,21 +533,24 @@
 }
 
 .summary-highlight span:first-child {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 700;
   line-height: 1;
 }
 
 .summary-highlight span:last-child {
-  font-size: 0.875rem;
+  font-size: 12px;
+  font-weight: 600;
   opacity: 0.9;
-  margin-top: 0.5rem;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .summary-stats {
   background: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;
+  padding: 20px;
   margin-bottom: 1.5rem;
   box-shadow: var(--shadow);
 }
@@ -525,9 +565,10 @@
 
 .stat-group h4 {
   color: var(--text-light);
-  font-size: 0.875rem;
+  font-size: 14px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-bottom: 1rem;
 }
 
