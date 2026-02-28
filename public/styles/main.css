@@ -485,6 +485,12 @@ body {
   font-size: 0.75rem;
 }
 
+.history-actions {
+    margin-top: 2rem;
+    padding: 1rem 0;
+    text-align: center;
+  }
+
 .empty-state {
   text-align: center;
   color: var(--text-light);
@@ -525,3 +531,4 @@ body {
     max-width: 500px;
   }
 }
+
