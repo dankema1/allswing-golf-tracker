@@ -49,8 +49,12 @@
     </div>
 
     <button class="secondary-btn history-nav-btn">
-      View History
+      Historical Data & Insights
     </button>
+
+    <footer class="home-footer">
+      <p>Created by Frontier Dan</p>
+    </footer>
   </div>
 
   <!-- Contact Category Screen -->
@@ -331,7 +335,7 @@
   <div id="history-screen" class="screen">
     <header class="history-header">
       <button id="back-home-btn" class="back-btn">← Back</button>
-      <h2>Practice History</h2>
+      <h2>Historical Data & Insights</h2>
     </header>
 
     <div class="history-filters">
@@ -347,7 +351,20 @@
     </div>
 
     <div class="history-actions">
+      <button id="insights-btn" class="primary-btn">View Insights</button>
       <button id="clear-history-btn" class="secondary-btn">Clear All History</button>
+    </div>
+  </div>
+
+  <!-- Insights Screen -->
+  <div id="insights-screen" class="screen">
+    <header class="insights-header">
+      <button id="back-history-btn" class="back-btn">← Back</button>
+      <h2>Practice Insights</h2>
+    </header>
+
+    <div id="insights-container" class="insights-container">
+      <!-- Dynamically populated with insights or empty state -->
     </div>
   </div>
 
