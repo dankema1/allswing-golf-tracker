@@ -1,6 +1,7 @@
 {
   "name": "allswing-golf-tracker",
   "version": "1.0.0",
+  "rebuild": "2026-02-28",
   "type": "module",
   "description": "Mobile-first golf practice tracker",
   "main": "src/server/server.js",
