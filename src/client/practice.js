@@ -142,6 +142,7 @@ export class PracticeSession {
       top_count: 0,
       chunk_count: 0,
       hosel_count: 0,
+      mishit_count: 0,
       make_count: 0,
       miss_count: 0,
       hammered_count: 0,
@@ -169,6 +170,7 @@ export class PracticeSession {
         case 'top': stats.top_count++; break;
         case 'chunk': stats.chunk_count++; break;
         case 'hosel': stats.hosel_count++; break;
+        case 'mishit': stats.mishit_count++; break;
         case 'make': stats.make_count++; break;
         case 'miss': stats.miss_count++; break;
         case 'hammered': stats.hammered_count++; break;
