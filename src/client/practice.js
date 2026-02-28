@@ -184,12 +184,15 @@ export class PracticeSession {
     });
 
     if (this.shots.length > 0) {
-      // Calculate "good shots" based on context
-      // For putting speed: make + gimme
-      // For accuracy: on_target
-      // For contact: pure
-      const goodShots = stats.pure_count + stats.on_target_count + stats.speed_make_count + stats.gimme_count;
-      stats.pure_percentage = Math.round((goodShots / this.shots.length) * 100 * 10) / 10;
+        // Calculate "good shots" based on context
+        // For putting make/miss: make
+        // For putting speed: speed_make + gimme
+        // For accuracy: on_target
+        // For contact: pure
+        const goodShots = stats.pure_count + stats.on_target_count + stats.speed_make_count + stats.gimme_count + stats.make_count;
+        stats.pure_percentage = Math.round((goodShots / this.shots.length) * 100 * 10) / 10;
+      }
+
     }
 
     // Get last 5 shots
@@ -292,3 +295,4 @@ export class PracticeSession {
     return this.sessionId !== null;
   }
 }
+
