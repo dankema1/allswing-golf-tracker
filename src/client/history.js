@@ -61,7 +61,18 @@ function setupHistoryListeners() {
       await loadHistory(filter);
     });
   });
-
+ // Clear history button
+  const clearHistoryBtn = document.getElementById('clear-history-btn');
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', async () => {
+      if (confirm('Are you sure you want to clear all practice history? This cannot be undone.')) {
+        const practiceSession = new PracticeSession();
+        localStorage.removeItem('sessionHistory');
+        await loadHistory(currentFilter);
+        alert('History cleared successfully!');
+      }
+    });
+  }
   // History item clicks - use event delegation
   const historyList = document.getElementById('history-list');
   if (historyList) {
@@ -121,3 +132,4 @@ async function showSessionDetail(sessionId) {
 export async function refreshHistory() {
   await loadHistory(currentFilter);
 }
+
