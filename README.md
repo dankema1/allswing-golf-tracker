@@ -166,3 +166,5 @@ ISC
 ## Author
 
 Built with AllSwing Golf Tracker
+
+<!-- Test push from VS Code - Claude Code works! -->
