@@ -84,31 +84,26 @@ body {
   display: inline-block;
   width: 24px;
   height: 24px;
-  background: white;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 70% 30%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 30% 70%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 15% 50%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 85% 50%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 15%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 85%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 40% 40%, rgba(0,0,0,0.05) 1px, transparent 1px),
+    radial-gradient(circle at 60% 40%, rgba(0,0,0,0.05) 1px, transparent 1px),
+    radial-gradient(circle at 40% 60%, rgba(0,0,0,0.05) 1px, transparent 1px),
+    radial-gradient(circle at 60% 60%, rgba(0,0,0,0.05) 1px, transparent 1px),
+    white;
+  background-size: 100% 100%;
   border-radius: 50%;
   border: 1px solid #E8E4DC;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(0, 0, 0, 0.05);
   position: relative;
-}
-
-.golf-ball::before,
-.golf-ball::after {
-  content: '';
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 50%;
-}
-
-.golf-ball::before {
-  top: 6px;
-  left: 8px;
-}
-
-.golf-ball::after {
-  bottom: 6px;
-  right: 8px;
 }
 
 .app-header p {
