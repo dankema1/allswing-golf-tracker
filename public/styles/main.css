@@ -74,6 +74,41 @@ body {
   font-weight: 700;
   margin-bottom: 0.25rem;
   color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.golf-ball {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  border: 1px solid #E8E4DC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.golf-ball::before,
+.golf-ball::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+}
+
+.golf-ball::before {
+  top: 6px;
+  left: 8px;
+}
+
+.golf-ball::after {
+  bottom: 6px;
+  right: 8px;
 }
 
 .app-header p {
